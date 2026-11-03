@@ -13,6 +13,10 @@
 source ~/.bashrc
 conda activate sema_run
 export HF_HOME=/scratch/$USER/hf_cache
+# Keep compiler caches off the 20 GB home quota.
+export TRITON_CACHE_DIR=/scratch/$USER/cache/triton
+export VLLM_CACHE_ROOT=/scratch/$USER/cache/vllm
+export TORCHINDUCTOR_CACHE_DIR=/scratch/$USER/cache/inductor
 
 cd "$SLURM_SUBMIT_DIR"
 nvidia-smi

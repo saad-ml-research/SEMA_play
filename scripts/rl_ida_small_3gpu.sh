@@ -80,6 +80,7 @@ CUDA_VISIBLE_DEVICES="$TRAIN_GPUS" accelerate launch --num_processes 2 \
     --vllm_server_base_url http://localhost:8000 \
     --save_strategy steps \
     --save_steps 10 \
+    --save_total_limit 2 \
     --logging_steps 1 \
     --log_completions \
     --report_to wandb \
