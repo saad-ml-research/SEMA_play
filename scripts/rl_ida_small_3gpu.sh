@@ -47,14 +47,14 @@ CUDA_VISIBLE_DEVICES="$SERVER_GPU" trl vllm-serve --model "$ATTACKER_CKPT" > "$S
 VLLM_PID=$!
 trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
 echo "Started vLLM attacker server (PID $VLLM_PID); waiting for http://localhost:8000 ..."
-for i in $(seq 1 180); do
+for i in $(seq 1 600); do
     if curl -sSf http://localhost:8000/health >/dev/null 2>&1; then
         echo "vLLM server is healthy after ${i}s."; break
     fi
     sleep 1
 done
 if ! curl -sSf http://localhost:8000/health >/dev/null 2>&1; then
-    echo "ERROR: vLLM server did not become healthy in 180s — see $SERVER_LOGFILE"; exit 1
+    echo "ERROR: vLLM server did not become healthy in 600s — see $SERVER_LOGFILE"; exit 1
 fi
 
 # --- Trainer (2 ranks) ---
